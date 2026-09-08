@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 import streamlit as st
-from langchain_mistralai import ChatMistralAI
+from langchain_mistralai import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate
 
 # ---------------- LOAD ENV ---------------- #
@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-MISTRAL_API_KEY = os.getenv("MISTRAL_API_KEY")
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 # ---------------- PAGE CONFIG ---------------- #
 st.set_page_config(
     page_title="MoneyMate AI",
@@ -209,10 +209,17 @@ Question:
 prompt = ChatPromptTemplate.from_template(template)
 
 # ---------------- MODEL ---------------- #
-llm = ChatMistralAI(
-    model="mistral-small-2506",
-    temperature=0.6
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+if not GROQ_API_KEY:
+    raise ValueError(
+        "GROQ_API_KEY not found. Please add it to your .env file."
     )
+
+llm = ChatGroq(
+    model="openai/gpt-oss-120b",
+    temperature=0.6,
+    api_key=GROQ_API_KEY
+)
 
 
 # ---------------- CHAIN ---------------- #
