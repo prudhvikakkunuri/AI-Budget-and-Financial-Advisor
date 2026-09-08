@@ -1,6 +1,6 @@
 streamlit
 langchain
-langchain-mistralai
+langchain-groq
 langchain-classic
 langchain-core
 mistralai
